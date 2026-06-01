@@ -1,6 +1,6 @@
 import React from 'react';
 import TopBar from '@/shared/ui/top-bar/top-bar.tsx';
-import { Heart, ShoppingCart, User } from 'react-feather';
+import { ShoppingCart, User } from 'react-feather';
 
 const HeaderWidget = () => {
   return (

@@ -3,7 +3,7 @@ import { Locale } from '@/app/[lang]/dictionaries';
 
 export interface I18nContextProps {
   lang: Locale;
-  dictionary: any;
+  dictionary: unknown;
 }
 
 export const I18nContext = createContext<I18nContextProps>(

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 import React from 'react';
-import ConfigProvider from '@/app/providers/config/config.provider.tsx';
 import Providers from '@/app/providers/providers.tsx';
 import { getDictionary, Locale } from '@/app/[lang]/dictionaries.ts';
 import HeaderWidget from '@/widgets/header/header.widget.tsx';

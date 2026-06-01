@@ -2,14 +2,15 @@
 
 import { Locale } from '@/app/[lang]/dictionaries';
 import { I18nContext } from './i18n.context';
+import { ReactNode } from 'react';
 
 export function I18nProvider({
   children,
   dictionary,
   lang,
 }: {
-  children: React.ReactNode;
-  dictionary: any;
+  children: ReactNode;
+  dictionary: unknown;
   lang: Locale;
 }) {
   return (

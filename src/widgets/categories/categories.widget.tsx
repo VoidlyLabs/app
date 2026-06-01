@@ -22,6 +22,7 @@ const CategoriesWidget = () => {
             <div className={'grid grid-cols-3 gap-4'}>
               {response.data.body.map((item) => (
                 <div
+                  key={item.id}
                   id={item.id}
                   className={
                     'p-6 rounded-md border-2 border-gray-200 shadow-xs'
