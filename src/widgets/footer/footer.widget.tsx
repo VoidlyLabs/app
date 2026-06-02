@@ -96,7 +96,7 @@ const FooterWidget = () => {
 
           <nav>
             <h2 className={'text-2xl font-bold'}>Магазин</h2>
-            <div className={'mt-8 grid gap-5 text-xl text-slate-300'}>
+            <div className={'mt-8 grid gap-5 text-md text-slate-300'}>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
@@ -126,7 +126,7 @@ const FooterWidget = () => {
 
           <nav>
             <h2 className={'text-2xl font-bold'}>Допомога</h2>
-            <div className={'mt-8 grid gap-5 text-xl text-slate-300'}>
+            <div className={'mt-8 grid gap-5 text-md text-slate-300'}>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
