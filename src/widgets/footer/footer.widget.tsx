@@ -52,7 +52,7 @@ const FooterWidget = () => {
                     'flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-3xl font-bold'
                   }
                 >
-                  getInitial(config.name)
+                  {getInitial(config.name)}
                 </span>
               )}
               <span className={'text-4xl font-bold'}>{config.name}</span>
