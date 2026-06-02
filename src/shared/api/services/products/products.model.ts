@@ -13,5 +13,13 @@ export interface Product {
   updatedAt: string;
 }
 
+export interface Product_Purchase_Request {
+  productId: string;
+  quantity: number;
+}
+
 export type Product_Response = AxiosResponse<BasicAPIResponse<Product>>;
 export type Product_List_Response = AxiosResponse<BasicAPIResponse<Product[]>>;
+export type Product_Purchase_Response = AxiosResponse<
+  BasicAPIResponse<Record<string, never>>
+>;
