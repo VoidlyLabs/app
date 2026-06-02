@@ -7,11 +7,15 @@ export interface Auth_SignIn_Request {
   password: string;
 }
 
+export type Auth_SignUp_Request = Auth_SignIn_Request;
+
 export type Auth_SignIn_Response = AxiosResponse<
   BasicAPIResponse<{
     client: BasicClient;
   }>
 >;
+
+export type Auth_SignUp_Response = Auth_SignIn_Response;
 
 export type Auth_Me_Response = Auth_SignIn_Response;
 

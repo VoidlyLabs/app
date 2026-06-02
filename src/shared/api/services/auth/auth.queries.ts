@@ -15,6 +15,18 @@ export const useSignIn = () =>
     },
   });
 
+export const useSignUp = () =>
+  useMutation({
+    mutationKey: ['authSignUp'],
+    mutationFn: AuthService.signUp,
+
+    onError(error: unknown) {
+      toast.error('Error occurred!');
+
+      console.error(error);
+    },
+  });
+
 export const useSignOut = () =>
   useMutation({
     mutationKey: ['authSignOut'],
