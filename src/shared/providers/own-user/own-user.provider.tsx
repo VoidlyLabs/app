@@ -18,7 +18,7 @@ const OwnUserProvider = ({ children }: OwnUserProviderProps) => {
     >
       {(response) => {
         return (
-          <OwnUserContext.Provider value={response.data.body.user}>
+          <OwnUserContext.Provider value={response.data.body.client}>
             {children}
           </OwnUserContext.Provider>
         );

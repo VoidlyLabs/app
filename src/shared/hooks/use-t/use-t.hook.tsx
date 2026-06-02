@@ -6,6 +6,14 @@ export function useT() {
   const { dictionary } = useI18n();
 
   return (key: string) => {
-    return key.split('.').reduce((obj, part) => obj?.[part], dictionary);
+    const value = key.split('.').reduce<unknown>((obj, part) => {
+      if (typeof obj !== 'object' || obj === null) {
+        return undefined;
+      }
+
+      return (obj as Record<string, unknown>)[part];
+    }, dictionary);
+
+    return typeof value === 'string' ? value : key;
   };
 }

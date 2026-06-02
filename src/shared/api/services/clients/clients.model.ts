@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 export interface BasicClient {
   id: string;
   username: string;
+  balance: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -11,11 +12,13 @@ export interface BasicClient {
 export interface Client_Create_Request {
   username: string;
   password: string;
+  balance?: number;
 }
 
 export interface Client_Update_Request {
   id: string;
   username: string;
+  balance?: number;
 }
 
 export type Clients_Response = AxiosResponse<BasicAPIResponse<BasicClient[]>>;

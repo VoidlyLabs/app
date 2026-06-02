@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
-import { BasicUser } from '@/shared/api/services/users/users.model';
+import { BasicClient } from '@/shared/api/services/clients/clients.model';
 
-export type OwnUserContextProps = BasicUser;
+export type OwnUserContextProps = BasicClient;
 
 export const OwnUserContext = createContext<OwnUserContextProps>(
   {} as OwnUserContextProps,

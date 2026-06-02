@@ -59,8 +59,8 @@ const FetchProvider = <T,>({
     return (
       <div
         className={cn(
-          loaderClassName,
           'w-full h-full flex justify-center items-center',
+          loaderClassName,
         )}
       >
         <Loader size={loaderSize} />
