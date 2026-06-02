@@ -1,4 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
+import {
+  getLocalizedSignInPath,
+  isAuthPath,
+} from '@/shared/api/core/auth-redirect';
 
 export const BasicAPI: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -35,11 +39,14 @@ BasicAPI.interceptors.response.use(
         error,
       );
 
-      if (
-        typeof window !== 'undefined' &&
-        window.location.pathname !== '/signin'
-      ) {
-        window.location.replace('/signin');
+      if (typeof window !== 'undefined') {
+        const pathname = window.location.pathname;
+
+        if (isAuthPath(pathname)) {
+          return Promise.reject(error);
+        }
+
+        window.location.replace(getLocalizedSignInPath(pathname));
       }
     }
 
