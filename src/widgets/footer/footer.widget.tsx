@@ -49,16 +49,16 @@ const FooterWidget = () => {
               ) : (
                 <span
                   className={
-                    'flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-3xl font-bold'
+                    'flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-xl font-bold'
                   }
                 >
                   {getInitial(config.name)}
                 </span>
               )}
-              <span className={'text-4xl font-bold'}>{config.name}</span>
+              <span className={'text-3xl font-bold'}>{config.name}</span>
             </Link>
 
-            <p className={'mt-6 max-w-sm text-lg leading-8 text-slate-400'}>
+            <p className={'mt-6 max-w-sm text-md leading-8 text-slate-400'}>
               Ваш надійний партнер у світі електроніки та технологій. Якість,
               швидкість, сервіс.
             </p>
@@ -95,7 +95,7 @@ const FooterWidget = () => {
           </div>
 
           <nav>
-            <h2 className={'text-2xl font-bold'}>Магазин</h2>
+            <h2 className={'text-xl font-bold'}>Магазин</h2>
             <div className={'mt-8 grid gap-5 text-md text-slate-300'}>
               <Link
                 href={`${langPrefix}/products`}
@@ -125,7 +125,7 @@ const FooterWidget = () => {
           </nav>
 
           <nav>
-            <h2 className={'text-2xl font-bold'}>Допомога</h2>
+            <h2 className={'text-xl font-bold'}>Допомога</h2>
             <div className={'mt-8 grid gap-5 text-md text-slate-300'}>
               <Link
                 href={`${langPrefix}/products`}
@@ -143,8 +143,8 @@ const FooterWidget = () => {
           </nav>
 
           <div>
-            <h2 className={'text-2xl font-bold'}>Контакти</h2>
-            <div className={'mt-8 grid gap-6 text-xl text-slate-300'}>
+            <h2 className={'text-xl font-bold'}>Контакти</h2>
+            <div className={'mt-8 grid gap-6 text-md text-slate-300'}>
               <div className={'flex items-start gap-4'}>
                 <Phone size={28} className={'mt-1 text-accent'} />
                 <div>
@@ -187,7 +187,7 @@ const FooterWidget = () => {
             <span>
               © {currentYear} {config.name}. Всі права захищені.
             </span>
-            <div className={'flex flex-wrap gap-6'}>
+            <div className={'flex text-md flex-wrap gap-6'}>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
