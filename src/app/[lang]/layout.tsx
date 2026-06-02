@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google';
 import '../globals.css';
 import React from 'react';
 import Providers from '@/app/providers/providers.tsx';
-import { getDictionary, Locale } from '@/app/[lang]/dictionaries.ts';
-import HeaderWidget from '@/widgets/header/header.widget.tsx';
+import { getDictionary, hasLocale, Locale } from '@/app/[lang]/dictionaries.ts';
+import AppShell from '@/app/app-shell.tsx';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export interface RootLayoutProps {
   children: React.ReactNode;
   params: Promise<{
-    lang: Locale;
+    lang: string;
   }>;
 }
 
@@ -26,7 +26,8 @@ export default async function RootLayout({
   children,
   params,
 }: RootLayoutProps) {
-  const { lang } = await params;
+  const { lang: paramLang } = await params;
+  const lang: Locale = hasLocale(paramLang) ? paramLang : 'en';
 
   const dictionary = await getDictionary(lang);
 
@@ -34,11 +35,7 @@ export default async function RootLayout({
     <html lang={lang} className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Providers lang={lang} dictionary={dictionary}>
-          <HeaderWidget />
-
-          <main className={'w-full justify-center flex py-4 xl:px-0 px-2'}>
-            <div className={'max-w-(--layout-area) w-full'}>{children}</div>
-          </main>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>
