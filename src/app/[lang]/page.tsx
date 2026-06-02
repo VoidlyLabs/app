@@ -1,9 +1,19 @@
+'use client';
+
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import Button from '@/shared/ui/button/button.tsx';
-import ImageLoader from '@/shared/ui/image-loader/image-loader.tsx';
 import { CreditCard, RefreshCcw, Shield, Truck } from 'react-feather';
 import CategoriesWidget from '@/widgets/categories/categories.widget.tsx';
+import { useConfig } from '@/app/providers/config/config.context';
+import Image from 'next/image';
 
 export default function Home() {
+  const { config } = useConfig();
+  const params = useParams<{ lang: string }>();
+  const productsHref = `/${params.lang}/products`;
+  const heroImage = '/hero.png';
+
   return (
     <div className={''}>
       <div
@@ -13,26 +23,28 @@ export default function Home() {
       >
         <div className={'flex flex-col gap-6 items-center lg:items-start'}>
           <h1 className={'text-5xl font-bold text-center lg:text-left'}>
-            Технології <br className={'lg:block hidden'} />{' '}
-            <span className={'text-accent'}>майбутнього</span> <br /> вже
-            сьогодні
+            {config.name} <br className={'lg:block hidden'} />{' '}
+            <span className={'text-accent'}>технології</span> <br /> для кожного
+            дня
           </h1>
 
           <p className={'text-gray-400 max-w-3/4 text-center lg:text-left'}>
-            Смарт-годинники, навушники та аксесуари найкращих брендів. Доставка
-            по всій Україні за 1-2 дні.
+            {config.description}
           </p>
 
-          <Button>Переглянути</Button>
+          <Link href={productsHref}>
+            <Button>Переглянути</Button>
+          </Link>
         </div>
 
         <div className={'p-8 bg-accent/20 rounded-2xl lg:block hidden'}>
-          <ImageLoader
+          <Image
             loading={'eager'}
-            className={''}
+            className={'h-115 w-115 object-contain'}
             height={460}
             width={460}
-            src={'/uploads/products/6a1df27a06c429592d53d215/image.png'}
+            src={heroImage}
+            alt={config.name}
           />
         </div>
       </div>

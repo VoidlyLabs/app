@@ -1,8 +1,16 @@
+'use client';
+
 import React from 'react';
 import { Mail, Phone } from 'react-feather';
 import Link from 'next/link';
+import { useConfig } from '@/app/providers/config/config.context';
+
+const normalizePhoneHref = (phoneNumber: string) =>
+  `tel:${phoneNumber.replace(/[^\d+]/g, '')}`;
 
 const TopBar = () => {
+  const { config } = useConfig();
+
   return (
     <div className={'w-full bg-accent flex items-center justify-center'}>
       <div
@@ -18,14 +26,14 @@ const TopBar = () => {
           <div className={'flex items-center gap-2'}>
             <Phone size={16} />
 
-            <Link href={'phone:+380441234567'}>
-              <span>+380 (44) 123-45-67</span>
+            <Link href={normalizePhoneHref(config.phoneNumber)}>
+              <span>{config.phoneNumber}</span>
             </Link>
           </div>
           <div className={'flex gap-2 items-center'}>
             <Mail size={16} />
-            <Link href={'mailto:info@voidly.ua'}>
-              <span>info@voidly.ua</span>
+            <Link href={`mailto:${config.email}`}>
+              <span>{config.email}</span>
             </Link>
           </div>
         </div>
