@@ -1,15 +1,17 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Mail, Phone } from 'react-feather';
 import Link from 'next/link';
 import { useConfig } from '@/app/providers/config/config.context';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 const normalizePhoneHref = (phoneNumber: string) =>
   `tel:${phoneNumber.replace(/[^\d+]/g, '')}`;
 
 const TopBar = () => {
   const { config } = useConfig();
+  const t = useT();
 
   return (
     <div className={'w-full bg-accent flex items-center justify-center'}>
@@ -42,7 +44,7 @@ const TopBar = () => {
             'flex items-center sm:justify-end justify-center w-full sm:w-auto pr-4 2xl:pr-0'
           }
         >
-          <span className={'text-sm'}>Безкоштовна доставка від 1000грн</span>
+          <span className={'text-sm'}>{t('topBar.freeShipping')}</span>
         </div>
       </div>
     </div>
@@ -50,3 +52,4 @@ const TopBar = () => {
 };
 
 export default TopBar;
+

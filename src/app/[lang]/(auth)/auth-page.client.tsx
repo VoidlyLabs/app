@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { FormEvent, useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -10,6 +10,7 @@ import { useConfig } from '@/app/providers/config/config.context';
 import ImageLoader from '@/shared/ui/image-loader/image-loader.tsx';
 import { cn } from '@/shared/lib/classnames.utils.ts';
 import { useSignIn, useSignUp } from '@/shared/api/services/auth/auth.queries';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 type AuthMode = 'signin' | 'register';
 
@@ -24,6 +25,7 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
   const params = useParams<{ lang: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const t = useT();
   const signIn = useSignIn();
   const signUp = useSignUp();
 
@@ -49,17 +51,17 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
     const username = email.trim();
 
     if (!username || !password) {
-      toast.error('Заповніть електронну пошту та пароль.');
+      toast.error(t('auth.toasts.fillCredentials'));
       return;
     }
 
     if (isRegister && password.length < 5) {
-      toast.error('Пароль має містити щонайменше 5 символів.');
+      toast.error(t('auth.toasts.shortPassword'));
       return;
     }
 
     if (isRegister && password !== confirmPassword) {
-      toast.error('Паролі не збігаються.');
+      toast.error(t('auth.toasts.passwordMismatch'));
       return;
     }
 
@@ -73,7 +75,9 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
     }
 
     await queryClient.invalidateQueries({ queryKey: ['authMe'] });
-    toast.success(isRegister ? 'Акаунт створено.' : 'Вхід виконано.');
+    toast.success(
+      isRegister ? t('auth.register.success') : t('auth.signin.success'),
+    );
     router.push(`/${params.lang}/products`);
   };
 
@@ -131,25 +135,30 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
 
         <div className={'relative z-1 max-w-2xl'}>
           <h1 className={'text-4xl font-bold leading-tight xl:text-7xl'}>
-            Технології у кожному моменті
+            {t('auth.heroTitle')}
           </h1>
           <p className={'mt-8 max-w-xl text-xl leading-relaxed text-white/90'}>
-            Приєднуйтесь до 15 000+ клієнтів, які вже обирають найкраще у{' '}
-            {config.name}.
+            {t('auth.heroSubtitle', { name: config.name })}
           </p>
 
           <div className={'mt-14 flex gap-10'}>
             <div>
               <div className={'text-4xl font-bold'}>1200+</div>
-              <div className={'mt-1 text-md text-white/85'}>товарів</div>
+              <div className={'mt-1 text-md text-white/85'}>
+                {t('auth.stats.products')}
+              </div>
             </div>
             <div>
-              <div className={'text-4xl font-bold'}>4.9★</div>
-              <div className={'mt-1 text-md text-white/85'}>рейтинг</div>
+              <div className={'text-4xl font-bold'}>4.9</div>
+              <div className={'mt-1 text-md text-white/85'}>
+                {t('auth.stats.rating')}
+              </div>
             </div>
             <div>
-              <div className={'text-4xl font-bold'}>1-2 дні</div>
-              <div className={'mt-1 text-md text-white/85'}>доставка</div>
+              <div className={'text-4xl font-bold'}>1-2</div>
+              <div className={'mt-1 text-md text-white/85'}>
+                {t('auth.stats.delivery')}
+              </div>
             </div>
           </div>
         </div>
@@ -171,7 +180,7 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
                 !isRegister && 'bg-white text-gray-950 shadow-md',
               )}
             >
-              Вхід
+              {t('auth.tabs.signin')}
             </Link>
             <Link
               href={authHref.register}
@@ -180,18 +189,18 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
                 isRegister && 'bg-white text-gray-950 shadow-md',
               )}
             >
-              Реєстрація
+              {t('auth.tabs.register')}
             </Link>
           </div>
 
           <div className={'mb-10 text-center'}>
             <h2 className={'text-5xl font-bold tracking-normal'}>
-              {isRegister ? 'Створіть акаунт!' : 'З поверненням!'}
+              {isRegister ? t('auth.register.title') : t('auth.signin.title')}
             </h2>
             <p className={'mt-5 text-2xl text-gray-500'}>
               {isRegister
-                ? 'Зареєструйтесь, щоб почати покупки'
-                : 'Увійдіть, щоб продовжити покупки'}
+                ? t('auth.register.subtitle')
+                : t('auth.signin.subtitle')}
             </p>
           </div>
 
@@ -200,15 +209,15 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
             className={
               'mb-10 flex h-18 w-full items-center justify-center gap-4 rounded-2xl border-2 border-gray-200 bg-white text-xl font-medium text-gray-700 transition hover:border-accent hover:text-accent'
             }
-            onClick={() => toast.error('Google авторизація ще не налаштована.')}
+            onClick={() => toast.error(t('auth.toasts.googleUnavailable'))}
           >
             <Chrome size={26} className={'text-accent'} />
-            Продовжити через Google
+            {t('auth.continueWithGoogle')}
           </button>
 
           <div className={'mb-10 flex items-center gap-6 text-gray-400'}>
             <div className={'h-px flex-1 bg-gray-200'} />
-            <span className={'text-lg'}>або</span>
+            <span className={'text-lg'}>{t('auth.divider')}</span>
             <div className={'h-px flex-1 bg-gray-200'} />
           </div>
 
@@ -224,7 +233,7 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
                 onChange={(event) => setEmail(event.target.value)}
                 type={'email'}
                 autoComplete={'email'}
-                placeholder={'Електронна пошта'}
+                placeholder={t('auth.email')}
                 className={
                   'min-w-0 flex-1 bg-transparent text-xl text-gray-900 outline-none placeholder:text-gray-400'
                 }
@@ -242,7 +251,7 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
                 onChange={(event) => setPassword(event.target.value)}
                 type={showPassword ? 'text' : 'password'}
                 autoComplete={isRegister ? 'new-password' : 'current-password'}
-                placeholder={'Пароль'}
+                placeholder={t('auth.password')}
                 className={
                   'min-w-0 flex-1 bg-transparent text-xl text-gray-900 outline-none placeholder:text-gray-400'
                 }
@@ -251,7 +260,9 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
                 type={'button'}
                 className={'text-gray-400 transition hover:text-accent'}
                 onClick={() => setShowPassword((value) => !value)}
-                aria-label={showPassword ? 'Сховати пароль' : 'Показати пароль'}
+                aria-label={
+                  showPassword ? t('auth.hidePassword') : t('auth.showPassword')
+                }
               >
                 {showPassword ? <EyeOff size={26} /> : <Eye size={26} />}
               </button>
@@ -269,7 +280,7 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete={'new-password'}
-                  placeholder={'Повторіть пароль'}
+                  placeholder={t('auth.confirmPassword')}
                   className={
                     'min-w-0 flex-1 bg-transparent text-xl text-gray-900 outline-none placeholder:text-gray-400'
                   }
@@ -285,17 +296,17 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
                   type={'checkbox'}
                   className={'h-5 w-5 accent-accent'}
                 />
-                Запам&apos;ятати мене
+                {t('auth.rememberMe')}
               </label>
               {!isRegister ? (
                 <button
                   type={'button'}
                   className={'font-medium text-accent'}
                   onClick={() =>
-                    toast.error('Відновлення пароля ще не налаштовано.')
+                    toast.error(t('auth.toasts.passwordRecoveryUnavailable'))
                   }
                 >
-                  Забули пароль?
+                  {t('auth.forgotPassword')}
                 </button>
               ) : null}
             </div>
@@ -308,21 +319,21 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
               }
             >
               {isPending
-                ? 'Зачекайте...'
+                ? t('auth.pending')
                 : isRegister
-                  ? 'Зареєструватися'
-                  : 'Увійти'}
+                  ? t('auth.register.submit')
+                  : t('auth.signin.submit')}
               <ArrowRight size={28} />
             </button>
           </form>
 
           <p className={'mt-10 text-center text-lg text-gray-500'}>
-            {isRegister ? 'Вже маєте акаунт?' : 'Ще немає акаунту?'}{' '}
+            {isRegister ? t('auth.alreadyHaveAccount') : t('auth.noAccount')}{' '}
             <Link
               href={isRegister ? authHref.signin : authHref.register}
               className={'font-bold text-accent'}
             >
-              {isRegister ? 'Увійти' : 'Зареєструватися'}
+              {isRegister ? t('auth.signin.submit') : t('auth.register.submit')}
             </Link>
           </p>
         </div>
@@ -332,3 +343,4 @@ const AuthPageClient = ({ mode }: AuthPageClientProps) => {
 };
 
 export default AuthPageClient;
+

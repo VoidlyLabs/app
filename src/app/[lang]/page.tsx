@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -7,10 +7,12 @@ import { CreditCard, RefreshCcw, Shield, Truck } from 'react-feather';
 import CategoriesWidget from '@/widgets/categories/categories.widget.tsx';
 import { useConfig } from '@/app/providers/config/config.context';
 import Image from 'next/image';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 export default function Home() {
   const { config } = useConfig();
   const params = useParams<{ lang: string }>();
+  const t = useT();
   const productsHref = `/${params.lang}/products`;
   const heroImage = '/hero.png';
 
@@ -24,8 +26,7 @@ export default function Home() {
         <div className={'flex flex-col gap-6 items-center lg:items-start'}>
           <h1 className={'text-5xl font-bold text-center lg:text-left'}>
             {config.name} <br className={'lg:block hidden'} />{' '}
-            <span className={'text-accent'}>технології</span> <br /> для кожного
-            дня
+            <span className={'text-accent'}>{t('home.heroSuffix')}</span>
           </h1>
 
           <p className={'text-gray-400 max-w-3/4 text-center lg:text-left'}>
@@ -33,7 +34,7 @@ export default function Home() {
           </p>
 
           <Link href={productsHref}>
-            <Button>Переглянути</Button>
+            <Button>{t('home.browse')}</Button>
           </Link>
         </div>
 
@@ -61,22 +62,22 @@ export default function Home() {
         >
           <div className={'gap-3 text-xs text-white lg:flex hidden'}>
             <Truck size={14} />
-            <span>Безкоштовна доставка від 1000 грн</span>
+            <span>{t('home.benefits.freeShipping')}</span>
           </div>
 
           <div className={' gap-3 text-xs text-white md:flex hidden'}>
             <Shield size={14} />
-            <span>Офіційна гарантія 12 місяців</span>
+            <span>{t('home.benefits.warranty')}</span>
           </div>
 
           <div className={'flex gap-3 text-xs text-white'}>
             <RefreshCcw size={14} />
-            <span>Повернення протягом 14 днів</span>
+            <span>{t('home.benefits.returns')}</span>
           </div>
 
           <div className={'gap-3 text-xs text-white xl:flex hidden'}>
             <CreditCard size={14} />
-            <span>Оплата при отриманні</span>
+            <span>{t('home.benefits.payment')}</span>
           </div>
         </div>
       </div>
@@ -87,3 +88,4 @@ export default function Home() {
     </div>
   );
 }
+

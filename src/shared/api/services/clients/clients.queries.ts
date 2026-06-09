@@ -1,6 +1,7 @@
-import BasicQueryClient from '@/shared/api/core/basic-query.client';
+﻿import BasicQueryClient from '@/shared/api/core/basic-query.client';
 import { ClientsService } from '@/shared/api/services/clients/clients.service';
 import { TimeUtils } from '@/shared/lib/time.utils';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
@@ -25,8 +26,10 @@ export const useClient = (id: string) =>
     staleTime: TimeUtils.toMilliseconds(0, 3),
   });
 
-export const useCreateClient = () =>
-  useMutation({
+export const useCreateClient = () => {
+  const t = useT();
+
+  return useMutation({
     mutationKey: ['clientCreate'],
     mutationFn: ClientsService.create,
 
@@ -35,14 +38,17 @@ export const useCreateClient = () =>
     },
 
     onError(error: unknown) {
-      toast.error('Error occurred!');
+      toast.error(t('common.errorOccurred'));
 
       console.error(error);
     },
   });
+};
 
-export const useUpdateClient = () =>
-  useMutation({
+export const useUpdateClient = () => {
+  const t = useT();
+
+  return useMutation({
     mutationKey: ['clientUpdate'],
     mutationFn: ClientsService.update,
 
@@ -51,14 +57,17 @@ export const useUpdateClient = () =>
     },
 
     onError(error: unknown) {
-      toast.error('Error occurred!');
+      toast.error(t('common.errorOccurred'));
 
       console.error(error);
     },
   });
+};
 
-export const useDeleteClient = () =>
-  useMutation({
+export const useDeleteClient = () => {
+  const t = useT();
+
+  return useMutation({
     mutationKey: ['clientDelete'],
     mutationFn: ClientsService.deleteById,
 
@@ -67,8 +76,10 @@ export const useDeleteClient = () =>
     },
 
     onError(error: unknown) {
-      toast.error('Error occurred!');
+      toast.error(t('common.errorOccurred'));
 
       console.error(error);
     },
   });
+};
+

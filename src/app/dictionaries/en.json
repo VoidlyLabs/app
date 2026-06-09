@@ -1,1 +1,137 @@
-{}
+{
+  "common": {
+    "errorOccurred": "Error occurred!",
+    "availability": {
+      "available": "In stock",
+      "unavailable": "Out of stock",
+      "unavailableFull": "Currently out of stock"
+    }
+  },
+  "home": {
+    "heroSuffix": "technology for every day",
+    "browse": "Browse catalog",
+    "benefits": {
+      "freeShipping": "Free shipping from 1000 UAH",
+      "warranty": "Official 12-month warranty",
+      "returns": "Returns within 14 days",
+      "payment": "Payment on delivery"
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "all": "All categories"
+  },
+  "products": {
+    "title": "Products",
+    "subtitle": "Choose a category or browse the full catalog.",
+    "all": "All",
+    "emptyByCategory": "There are no products in this category yet.",
+    "details": {
+      "backToCatalog": "Back to catalog",
+      "delivery": "Delivery across Ukraine in 1-2 days",
+      "warranty": "Official 12-month warranty",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "buy": "Buy",
+      "ordering": "Ordering...",
+      "relatedTitle": "Similar products",
+      "relatedSubtitle": "A few more items from the catalog."
+    },
+    "toasts": {
+      "purchaseFailed": "Could not complete the purchase.",
+      "unavailable": "This product is out of stock.",
+      "purchased": "Purchase completed."
+    }
+  },
+  "auth": {
+    "heroTitle": "Technology in every moment",
+    "heroSubtitle": "Join 15,000+ customers who already choose the best from {name}.",
+    "stats": {
+      "products": "products",
+      "rating": "rating",
+      "delivery": "delivery"
+    },
+    "tabs": {
+      "signin": "Sign in",
+      "register": "Register"
+    },
+    "signin": {
+      "title": "Welcome back!",
+      "subtitle": "Sign in to continue shopping",
+      "submit": "Sign in",
+      "success": "Signed in."
+    },
+    "register": {
+      "title": "Create an account!",
+      "subtitle": "Register to start shopping",
+      "submit": "Register",
+      "success": "Account created."
+    },
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Repeat password",
+    "continueWithGoogle": "Continue with Google",
+    "divider": "or",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "pending": "Please wait...",
+    "alreadyHaveAccount": "Already have an account?",
+    "noAccount": "Don't have an account yet?",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "toasts": {
+      "fillCredentials": "Fill in email and password.",
+      "shortPassword": "Password must contain at least 5 characters.",
+      "passwordMismatch": "Passwords do not match.",
+      "googleUnavailable": "Google authorization is not configured yet.",
+      "passwordRecoveryUnavailable": "Password recovery is not configured yet.",
+      "signInFailed": "Error occurred! Check your credentials.",
+      "signUpFailed": "Error occurred!",
+      "signOutFailed": "Error occurred!"
+    }
+  },
+  "profile": {
+    "authRequiredTitle": "Authorization required",
+    "authRequiredSubtitle": "Sign in to view your profile.",
+    "title": "Profile",
+    "subtitle": "Basic information about your account.",
+    "clientPrefix": "Client",
+    "login": "Login",
+    "balance": "Balance",
+    "createdAt": "Created at",
+    "contact": "Contact",
+    "accountManagement": "Account management",
+    "accountManagementDescription": "End the current session if you use a shared device.",
+    "signingOut": "Signing out...",
+    "signOut": "Sign out",
+    "signedOut": "You have signed out."
+  },
+  "topBar": {
+    "freeShipping": "Free shipping from 1000 UAH"
+  },
+  "footer": {
+    "description": "Your reliable partner in electronics and technology. Quality, speed, service.",
+    "shop": "Shop",
+    "newItems": "New arrivals",
+    "shippingPayment": "Shipping and payment",
+    "exchangeReturns": "Exchange and returns",
+    "warranty": "Warranty",
+    "help": "Help",
+    "faq": "Questions and answers",
+    "contactUs": "Contact us",
+    "contacts": "Contacts",
+    "workingHours": "Mon-Sun: 9:00 - 21:00",
+    "address": "Kyiv, Khreshchatyk St, 1",
+    "copyright": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  "language": {
+    "switchTo": {
+      "en": "Switch language to English",
+      "uk": "Switch language to Ukrainian"
+    }
+  }
+}
+

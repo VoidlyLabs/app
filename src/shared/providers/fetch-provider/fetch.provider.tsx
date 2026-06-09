@@ -10,7 +10,7 @@ import Loader from '@/shared/ui/loader/loader';
 
 type FetchProviderProps<T> = {
   queryObject: UseQueryResult<T, Error>;
-  children: (data: T) => React.ReactNode; // рендер-функция
+  children: (data: T) => React.ReactNode; // render function
   className?: string;
   isLoading?: boolean;
   loaderClassName?: string;

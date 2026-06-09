@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -23,9 +23,13 @@ import { Product } from '@/shared/api/services/products/products.model.ts';
 import FetchProvider from '@/shared/providers/fetch-provider/fetch.provider.tsx';
 import ImageLoader from '@/shared/ui/image-loader/image-loader.tsx';
 import { cn } from '@/shared/lib/classnames.utils.ts';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import { Locale } from '@/shared/lib/i18n/locales';
 
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat('uk-UA', {
+const getIntlLocale = (lang: Locale) => (lang === 'uk' ? 'uk-UA' : 'en-US');
+
+const formatPrice = (price: number, lang: Locale) =>
+  new Intl.NumberFormat(getIntlLocale(lang), {
     style: 'currency',
     currency: 'UAH',
     maximumFractionDigits: 0,
@@ -35,57 +39,64 @@ const ProductCard = ({
   lang,
   product,
 }: {
-  lang: string;
+  lang: Locale;
   product: Product;
-}) => (
-  <Link
-    href={`/${lang}/products/${product.id}`}
-    className={
-      'overflow-hidden rounded-md border border-gray-200 bg-white shadow-xs transition hover:border-accent hover:shadow-md'
-    }
-  >
-    <div className={'aspect-square bg-accent/10'}>
-      <ImageLoader
-        src={product.imageUrl}
-        alt={product.name}
-        width={360}
-        height={360}
-        className={'h-full w-full object-contain p-6'}
-      />
-    </div>
+}) => {
+  const t = useT();
 
-    <div className={'flex min-h-36 flex-col gap-3 p-4'}>
-      <div className={'flex-1'}>
-        <h3 className={'line-clamp-2 text-base font-semibold'}>
-          {product.name}
-        </h3>
-        <p className={'mt-2 line-clamp-2 text-sm text-gray-400'}>
-          {product.description}
-        </p>
+  return (
+    <Link
+      href={`/${lang}/products/${product.id}`}
+      className={
+        'overflow-hidden rounded-md border border-gray-200 bg-white shadow-xs transition hover:border-accent hover:shadow-md'
+      }
+    >
+      <div className={'aspect-square bg-accent/10'}>
+        <ImageLoader
+          src={product.imageUrl}
+          alt={product.name}
+          width={360}
+          height={360}
+          className={'h-full w-full object-contain p-6'}
+        />
       </div>
 
-      <div className={'flex items-center justify-between gap-3'}>
-        <span className={'text-lg font-bold text-accent'}>
-          {formatPrice(product.price)}
-        </span>
-        <span
-          className={cn(
-            'rounded-2xl px-3 py-1 text-xs font-semibold',
-            product.isAvailable
-              ? 'bg-green-50 text-green-600'
-              : 'bg-gray-100 text-gray-400',
-          )}
-        >
-          {product.isAvailable ? 'В наявності' : 'Немає'}
-        </span>
+      <div className={'flex min-h-36 flex-col gap-3 p-4'}>
+        <div className={'flex-1'}>
+          <h3 className={'line-clamp-2 text-base font-semibold'}>
+            {product.name}
+          </h3>
+          <p className={'mt-2 line-clamp-2 text-sm text-gray-400'}>
+            {product.description}
+          </p>
+        </div>
+
+        <div className={'flex items-center justify-between gap-3'}>
+          <span className={'text-lg font-bold text-accent'}>
+            {formatPrice(product.price, lang)}
+          </span>
+          <span
+            className={cn(
+              'rounded-2xl px-3 py-1 text-xs font-semibold',
+              product.isAvailable
+                ? 'bg-green-50 text-green-600'
+                : 'bg-gray-100 text-gray-400',
+            )}
+          >
+            {product.isAvailable
+              ? t('common.availability.available')
+              : t('common.availability.unavailable')}
+          </span>
+        </div>
       </div>
-    </div>
-  </Link>
-);
+    </Link>
+  );
+};
 
 const ProductPageClient = () => {
-  const params = useParams<{ lang: string; id: string }>();
+  const params = useParams<{ lang: Locale; id: string }>();
   const queryClient = useQueryClient();
+  const t = useT();
   const productQuery = useProduct(params.id);
   const relatedProductsQuery = useProducts();
   const purchaseProduct = usePurchaseProduct();
@@ -103,7 +114,7 @@ const ProductPageClient = () => {
         }
       >
         <ArrowLeft size={18} />
-        До каталогу
+        {t('products.details.backToCatalog')}
       </Link>
 
       <FetchProvider queryObject={productQuery} loaderClassName={'py-24'}>
@@ -114,7 +125,7 @@ const ProductPageClient = () => {
 
           const purchase = async () => {
             if (!product.isAvailable) {
-              toast.error('Товару немає в наявності.');
+              toast.error(t('products.toasts.unavailable'));
               return;
             }
 
@@ -128,7 +139,7 @@ const ProductPageClient = () => {
               queryClient.invalidateQueries({ queryKey: ['products'] }),
             ]);
 
-            toast.success('Покупку оформлено.');
+            toast.success(t('products.toasts.purchased'));
           };
 
           return (
@@ -165,7 +176,9 @@ const ProductPageClient = () => {
                       )}
                     >
                       <CheckCircle size={16} />
-                      {product.isAvailable ? 'В наявності' : 'Немає в наявності'}
+                      {product.isAvailable
+                        ? t('common.availability.available')
+                        : t('common.availability.unavailableFull')}
                     </div>
 
                     <h1 className={'text-3xl font-bold leading-tight'}>
@@ -179,11 +192,11 @@ const ProductPageClient = () => {
                   <div className={'grid gap-3 text-sm text-gray-500'}>
                     <div className={'flex items-center gap-3'}>
                       <Truck size={18} className={'text-accent'} />
-                      Доставка по Україні 1-2 дні
+                      {t('products.details.delivery')}
                     </div>
                     <div className={'flex items-center gap-3'}>
                       <Shield size={18} className={'text-accent'} />
-                      Офіційна гарантія 12 місяців
+                      {t('products.details.warranty')}
                     </div>
                   </div>
                 </div>
@@ -201,16 +214,16 @@ const ProductPageClient = () => {
                 >
                   <div>
                     <div className={'text-sm font-semibold text-gray-400'}>
-                      Ціна
+                      {t('products.details.price')}
                     </div>
                     <div className={'mt-2 text-4xl font-bold text-accent'}>
-                      {formatPrice(product.price)}
+                      {formatPrice(product.price, params.lang)}
                     </div>
                   </div>
 
                   <div>
                     <div className={'mb-2 text-sm font-semibold text-gray-500'}>
-                      Кількість
+                      {t('products.details.quantity')}
                     </div>
                     <div
                       className={
@@ -241,10 +254,10 @@ const ProductPageClient = () => {
 
                   <div className={'md:text-right'}>
                     <div className={'text-sm font-semibold text-gray-400'}>
-                      Разом
+                      {t('products.details.total')}
                     </div>
                     <div className={'mt-2 text-2xl font-bold'}>
-                      {formatPrice(totalPrice)}
+                      {formatPrice(totalPrice, params.lang)}
                     </div>
                   </div>
 
@@ -257,7 +270,9 @@ const ProductPageClient = () => {
                     }
                   >
                     <ShoppingCart size={20} />
-                    {purchaseProduct.isPending ? 'Оформлення...' : 'Купити'}
+                    {purchaseProduct.isPending
+                      ? t('products.details.ordering')
+                      : t('products.details.buy')}
                   </button>
                 </div>
               </section>
@@ -279,9 +294,11 @@ const ProductPageClient = () => {
                   return (
                     <section className={'pt-2'}>
                       <div className={'mb-4'}>
-                        <h2 className={'text-2xl font-bold'}>Схожі товари</h2>
+                        <h2 className={'text-2xl font-bold'}>
+                          {t('products.details.relatedTitle')}
+                        </h2>
                         <p className={'mt-1 text-sm text-gray-400'}>
-                          Ще кілька позицій з каталогу.
+                          {t('products.details.relatedSubtitle')}
                         </p>
                       </div>
 
@@ -311,3 +328,4 @@ const ProductPageClient = () => {
 };
 
 export default ProductPageClient;
+

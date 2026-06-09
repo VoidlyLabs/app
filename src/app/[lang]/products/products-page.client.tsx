@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -11,17 +11,22 @@ import { useCategories } from '@/shared/api/services/category/category.queries.t
 import FetchProvider from '@/shared/providers/fetch-provider/fetch.provider.tsx';
 import ImageLoader from '@/shared/ui/image-loader/image-loader.tsx';
 import { cn } from '@/shared/lib/classnames.utils.ts';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
+import { Locale } from '@/shared/lib/i18n/locales';
 
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat('uk-UA', {
+const getIntlLocale = (lang: Locale) => (lang === 'uk' ? 'uk-UA' : 'en-US');
+
+const formatPrice = (price: number, lang: Locale) =>
+  new Intl.NumberFormat(getIntlLocale(lang), {
     style: 'currency',
     currency: 'UAH',
     maximumFractionDigits: 0,
   }).format(price);
 
 const ProductsPageClient = () => {
-  const params = useParams<{ lang: string }>();
+  const params = useParams<{ lang: Locale }>();
   const searchParams = useSearchParams();
+  const t = useT();
   const categoryId = searchParams.get('categoryId') ?? '';
   const productsHref = `/${params.lang}/products`;
 
@@ -38,9 +43,9 @@ const ProductsPageClient = () => {
     <div className={'py-8'}>
       <div className={'mb-8 flex flex-col gap-4'}>
         <div>
-          <h1 className={'text-4xl font-bold'}>Товари</h1>
+          <h1 className={'text-4xl font-bold'}>{t('products.title')}</h1>
           <p className={'mt-2 text-sm text-gray-400'}>
-            Оберіть категорію або перегляньте весь каталог.
+            {t('products.subtitle')}
           </p>
         </div>
 
@@ -56,7 +61,7 @@ const ProductsPageClient = () => {
                     : 'border-gray-200 text-gray-600 hover:border-accent hover:text-accent',
                 )}
               >
-                Всі
+                {t('products.all')}
               </Link>
 
               {response.data.body.map((category) => (
@@ -116,7 +121,7 @@ const ProductsPageClient = () => {
 
                     <div className={'flex items-center justify-between gap-3'}>
                       <span className={'text-xl font-bold text-accent'}>
-                        {formatPrice(product.price)}
+                        {formatPrice(product.price, params.lang)}
                       </span>
                       <span
                         className={cn(
@@ -126,7 +131,9 @@ const ProductsPageClient = () => {
                             : 'bg-gray-100 text-gray-400',
                         )}
                       >
-                        {product.isAvailable ? 'В наявності' : 'Немає'}
+                        {product.isAvailable
+                          ? t('common.availability.available')
+                          : t('common.availability.unavailable')}
                       </span>
                     </div>
                   </div>
@@ -139,7 +146,7 @@ const ProductsPageClient = () => {
                 'rounded-md border border-gray-200 px-6 py-14 text-center text-gray-400'
               }
             >
-              Товарів у цій категорії поки немає.
+              {t('products.emptyByCategory')}
             </div>
           )
         }
@@ -149,3 +156,4 @@ const ProductsPageClient = () => {
 };
 
 export default ProductsPageClient;
+

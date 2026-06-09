@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -13,20 +13,27 @@ import {
 } from 'react-feather';
 import { useConfig } from '@/app/providers/config/config.context';
 import ImageLoader from '@/shared/ui/image-loader/image-loader.tsx';
+import { cn } from '@/shared/lib/classnames.utils.ts';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 const getInitial = (name: string) => name.trim().charAt(0).toLowerCase() || 'v';
 
 const normalizePhoneHref = (phoneNumber: string) =>
   `tel:${phoneNumber.replace(/[^\d+]/g, '')}`;
 
-const FooterWidget = () => {
+export interface FooterWidgetProps {
+  className?: string;
+}
+
+const FooterWidget = ({ className }: FooterWidgetProps) => {
   const { config } = useConfig();
   const params = useParams<{ lang?: string }>();
+  const t = useT();
   const langPrefix = params.lang ? `/${params.lang}` : '';
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={'mt-16 bg-[#101827] text-white'}>
+    <footer className={cn('mt-16 w-full bg-[#101827] text-white', className)}>
       <div className={'mx-auto max-w-(--layout-area) px-4 py-14 xl:px-0'}>
         <div
           className={
@@ -59,8 +66,7 @@ const FooterWidget = () => {
             </Link>
 
             <p className={'mt-6 max-w-sm text-md leading-8 text-slate-400'}>
-              Ваш надійний партнер у світі електроніки та технологій. Якість,
-              швидкість, сервіс.
+              {t('footer.description')}
             </p>
 
             <div className={'mt-8 flex gap-4'}>
@@ -95,55 +101,55 @@ const FooterWidget = () => {
           </div>
 
           <nav>
-            <h2 className={'text-xl font-bold'}>Магазин</h2>
+            <h2 className={'text-xl font-bold'}>{t('footer.shop')}</h2>
             <div className={'mt-8 grid gap-5 text-md text-slate-300'}>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
               >
-                Новинки
+                {t('footer.newItems')}
               </Link>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
               >
-                Доставка та оплата
+                {t('footer.shippingPayment')}
               </Link>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
               >
-                Обмін та повернення
+                {t('footer.exchangeReturns')}
               </Link>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
               >
-                Гарантія
+                {t('footer.warranty')}
               </Link>
             </div>
           </nav>
 
           <nav>
-            <h2 className={'text-xl font-bold'}>Допомога</h2>
+            <h2 className={'text-xl font-bold'}>{t('footer.help')}</h2>
             <div className={'mt-8 grid gap-5 text-md text-slate-300'}>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
               >
-                Питання та відповіді
+                {t('footer.faq')}
               </Link>
               <Link
                 href={`${langPrefix}/profile`}
                 className={'hover:text-white'}
               >
-                Зв&apos;язатися з нами
+                {t('footer.contactUs')}
               </Link>
             </div>
           </nav>
 
           <div>
-            <h2 className={'text-xl font-bold'}>Контакти</h2>
+            <h2 className={'text-xl font-bold'}>{t('footer.contacts')}</h2>
             <div className={'mt-8 grid gap-6 text-md text-slate-300'}>
               <div className={'flex items-start gap-4'}>
                 <Phone size={28} className={'mt-1 text-accent'} />
@@ -155,7 +161,7 @@ const FooterWidget = () => {
                     {config.phoneNumber}
                   </a>
                   <div className={'mt-2 text-base text-slate-500'}>
-                    Пн-Нд: 9:00 - 21:00
+                    {t('footer.workingHours')}
                   </div>
                 </div>
               </div>
@@ -172,7 +178,7 @@ const FooterWidget = () => {
 
               <div className={'flex items-start gap-4'}>
                 <MapPin size={28} className={'mt-1 text-accent'} />
-                <span>м. Київ, вул. Хрещатик, 1</span>
+                <span>{t('footer.address')}</span>
               </div>
             </div>
           </div>
@@ -185,20 +191,20 @@ const FooterWidget = () => {
             }
           >
             <span>
-              © {currentYear} {config.name}. Всі права захищені.
+              © {currentYear} {config.name}. {t('footer.copyright')}
             </span>
             <div className={'flex text-md flex-wrap gap-6'}>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
               >
-                Політика конфіденційності
+                {t('footer.privacy')}
               </Link>
               <Link
                 href={`${langPrefix}/products`}
                 className={'hover:text-white'}
               >
-                Умови використання
+                {t('footer.terms')}
               </Link>
             </div>
           </div>
@@ -209,3 +215,4 @@ const FooterWidget = () => {
 };
 
 export default FooterWidget;
+

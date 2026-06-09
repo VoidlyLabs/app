@@ -1,12 +1,11 @@
-'use client';
+﻿'use client';
 
 import { createContext, useContext } from 'react';
 import { BasicConfiguration } from '@/shared/api/services/configuration/configuration.model';
 
 export const defaultConfiguration: BasicConfiguration = {
   name: 'Voidly',
-  description:
-    'Смарт-годинники, навушники та аксесуари найкращих брендів. Доставка по всій Україні за 1-2 дні.',
+  description: '',
   logoUrl: '',
   accentColor: '#AD46FF',
   backgroundColor: '#ffffff',
@@ -26,3 +25,4 @@ export const ConfigContext = createContext<ConfigContextProps>({
 });
 
 export const useConfig = () => useContext(ConfigContext);
+

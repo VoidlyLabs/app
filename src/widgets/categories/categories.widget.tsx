@@ -1,26 +1,28 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useCategories } from '@/shared/api/services/category/category.queries.ts';
 import FetchProvider from '@/shared/providers/fetch-provider/fetch.provider.tsx';
+import { useT } from '@/shared/hooks/use-t/use-t.hook';
 
 const CategoriesWidget = () => {
   const data = useCategories();
   const params = useParams<{ lang: string }>();
+  const t = useT();
   const productsHref = `/${params.lang}/products`;
 
   return (
     <div className={'w-full'}>
       <div className={'w-full flex justify-between items-center mb-4'}>
-        <span className={'text-3xl font-bold'}>Категорії</span>
+        <span className={'text-3xl font-bold'}>{t('categories.title')}</span>
 
         <Link
           href={productsHref}
           className={'cursor-pointer text-accent text-sm font-semibold'}
         >
-          Всі категорії
+          {t('categories.all')}
         </Link>
       </div>
       <div>
@@ -52,3 +54,4 @@ const CategoriesWidget = () => {
 };
 
 export default CategoriesWidget;
+
