@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useConfig } from '@/app/providers/config/config.context';
 import ImageLoader from '@/shared/ui/image-loader/image-loader.tsx';
 import { useParams } from 'next/navigation';
+import LanguageToggle from '@/shared/ui/language-toggle/language-toggle';
 
 const HeaderWidget = () => {
   const { config } = useConfig();
@@ -44,7 +45,8 @@ const HeaderWidget = () => {
             </h2>
           </Link>
 
-          <div className={'flex items-center gap-4'}>
+          <div className={'flex items-center gap-3 sm:gap-4'}>
+            <LanguageToggle />
             <ShoppingCart
               size={28}
               className={'text-gray-700 cursor-pointer'}
