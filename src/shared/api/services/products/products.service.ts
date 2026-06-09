@@ -5,36 +5,45 @@ import {
   Product_Purchase_Response,
   Product_Response,
 } from '@/shared/api/services/products/products.model';
+import { Locale } from '@/shared/lib/i18n/locales';
 
 export class ProductsService {
-  static find(): Promise<Product_List_Response> {
+  static find(lang: Locale): Promise<Product_List_Response> {
     return BasicAPI.request({
       method: 'GET',
       url: '/common/products',
+      params: { lang },
     });
   }
 
-  static findByCategoryId(categoryId: string): Promise<Product_List_Response> {
+  static findByCategoryId(
+    categoryId: string,
+    lang: Locale,
+  ): Promise<Product_List_Response> {
     return BasicAPI.request({
       method: 'GET',
       url: `/common/products/category/${categoryId}`,
+      params: { lang },
     });
   }
 
-  static findById(id: string): Promise<Product_Response> {
+  static findById(id: string, lang: Locale): Promise<Product_Response> {
     return BasicAPI.request({
       method: 'GET',
       url: `/common/products/${id}`,
+      params: { lang },
     });
   }
 
   static purchase(
     data: Product_Purchase_Request,
+    lang: Locale,
   ): Promise<Product_Purchase_Response> {
     return BasicAPI.request({
       method: 'POST',
       url: '/common/products/purchase',
       data,
+      params: { lang },
     });
   }
 }

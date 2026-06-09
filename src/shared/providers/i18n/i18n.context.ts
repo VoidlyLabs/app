@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { Locale } from '@/app/[lang]/dictionaries';
+import { Locale } from '@/shared/lib/i18n/locales';
 
 export interface I18nContextProps {
   lang: Locale;

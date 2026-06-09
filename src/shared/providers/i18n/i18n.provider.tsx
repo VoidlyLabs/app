@@ -1,6 +1,6 @@
 'use client';
 
-import { Locale } from '@/app/[lang]/dictionaries';
+import { Locale } from '@/shared/lib/i18n/locales';
 import { I18nContext } from './i18n.context';
 import { ReactNode } from 'react';
 

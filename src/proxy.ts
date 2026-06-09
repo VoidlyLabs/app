@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const locales = ['en', 'uk'] as const;
-const defaultLocale = 'en';
+import { defaultLocale, hasLocale } from '@/shared/lib/i18n/locales';
 
 function getLocale(request: NextRequest) {
   const language = request.headers.get('accept-language');
@@ -12,7 +10,7 @@ function getLocale(request: NextRequest) {
 function getLocaleFromPath(pathname: string) {
   const locale = pathname.split('/')[1];
 
-  return locales.includes(locale as (typeof locales)[number]) ? locale : null;
+  return hasLocale(locale) ? locale : null;
 }
 
 export function proxy(request: NextRequest) {

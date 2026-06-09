@@ -3,8 +3,9 @@ import { Inter } from 'next/font/google';
 import '../globals.css';
 import React from 'react';
 import Providers from '@/app/providers/providers.tsx';
-import { getDictionary, hasLocale, Locale } from '@/app/[lang]/dictionaries.ts';
+import { getDictionary } from '@/app/[lang]/dictionaries.ts';
 import AppShell from '@/app/app-shell.tsx';
+import { hasLocale, Locale } from '@/shared/lib/i18n/locales';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -32,7 +33,10 @@ export default async function RootLayout({
   const dictionary = await getDictionary(lang);
 
   return (
-    <html lang={lang} className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang={lang}
+      className={`${inter.variable} h-full antialiased min-h-[100dvh]`}
+    >
       <body className="min-h-full flex flex-col">
         <Providers lang={lang} dictionary={dictionary}>
           <AppShell>{children}</AppShell>
